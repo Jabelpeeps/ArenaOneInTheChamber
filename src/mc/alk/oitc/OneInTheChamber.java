@@ -19,7 +19,6 @@ public class OneInTheChamber extends JavaPlugin{
 		/// "OneInTheChamber": The name of our competition
 		/// "oic": the name of our command alias
 		/// OITCArena.class: which arena should this competition use
-		/// Register a Paintball
 		BattleArena.registerCompetition(this, "OneInTheChamber", "oic", OITCArena.class);
 
 		/// Load our config options
