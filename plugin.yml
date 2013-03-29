@@ -1,0 +1,9 @@
+name: ArenaOneInTheChamber
+main: mc.alk.oitc.OneInTheChamber
+version: 1.0
+depend: [BattleArena]
+authors: [alkarin_v]
+
+commands:
+    oic:
+        aliases: [oitc]
