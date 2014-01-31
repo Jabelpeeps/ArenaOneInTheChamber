@@ -1,15 +1,14 @@
 package mc.alk.oitc;
 
-import java.util.HashMap;
-import java.util.Set;
-
 import mc.alk.arena.BattleArena;
 import mc.alk.arena.util.Log;
-
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.HashMap;
+import java.util.Set;
 public class OneInTheChamber extends JavaPlugin{
 
 	@Override
@@ -55,7 +54,9 @@ public class OneInTheChamber extends JavaPlugin{
 				damages.put(m, dmg);
 		}
 		OITCArena.damages=damages;
-		OITCArena.velocity = config.getDouble("items.arrow.velocity", 3.0);
+        OITCArena.velocity = config.getDouble("items.arrow.velocity", OITCArena.velocity);
+        OITCArena.breakOnHit = config.getBoolean("items.arrow.breakOnHit", OITCArena.breakOnHit);
+		OITCArena.instantShot = config.getBoolean("bow.instantShoot", OITCArena.instantShot);
 	}
 
 }
