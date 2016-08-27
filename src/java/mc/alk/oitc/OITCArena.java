@@ -1,11 +1,11 @@
 package mc.alk.oitc;
 
-import mc.alk.arena.objects.ArenaPlayer;
-import mc.alk.arena.objects.arenas.Arena;
-import mc.alk.arena.objects.events.ArenaEventHandler;
-import mc.alk.arena.util.DmgDeathUtil;
-import mc.alk.arena.util.InventoryUtil;
-import mc.alk.arena.util.Log;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -21,11 +21,12 @@ import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import mc.alk.arena.objects.ArenaPlayer;
+import mc.alk.arena.objects.arenas.Arena;
+import mc.alk.arena.objects.events.ArenaEventHandler;
+import mc.alk.arena.util.DmgDeathUtil;
+import mc.alk.arena.util.InventoryUtil;
+import mc.alk.arena.util.Log;
 
 public class OITCArena extends Arena{
 	static double velocity = 3;
@@ -72,7 +73,7 @@ public class OITCArena extends Arena{
 			event.setDamage(dmg);
 	}
 
-	@ArenaEventHandler(entityMethod="getEntity")
+	@ArenaEventHandler()
 	public void onEntityShootBowEvent(EntityShootBowEvent event){
 		Entity proj = event.getProjectile();
 		if (proj == null || proj.getType() != EntityType.ARROW)
@@ -109,7 +110,7 @@ public class OITCArena extends Arena{
         arrowIds.add(arrow.getEntityId());
         if (!shotFromBow){ /// They are using the classic instashot arrow from a click
             boolean inf = false;
-            ItemStack is = p.getItemInHand();
+            ItemStack is = p.getInventory().getItemInMainHand();
             Map<Enchantment,Integer> encs = is.getEnchantments();
             if (encs != null){
                 if (encs.containsKey(Enchantment.ARROW_FIRE)){
@@ -136,12 +137,13 @@ public class OITCArena extends Arena{
         }
     }
 
-	@ArenaEventHandler
+	@Override
+    @ArenaEventHandler
 	public void onPlayerInteract(PlayerInteractEvent event){
         Log.debug(" onPlayerInteract FRIIGN  " + event);
 		if (!instantShot ||
 				!(event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) ||
-				event.getPlayer().getItemInHand() == null || event.getPlayer().getItemInHand().getType() != Material.BOW ||
+				event.getPlayer().getInventory().getItemInMainHand() == null || event.getPlayer().getInventory().getItemInMainHand().getType() != Material.BOW ||
 				!event.getPlayer().getInventory().contains(Material.ARROW)){
 			return;}
 		Player p = event.getPlayer();

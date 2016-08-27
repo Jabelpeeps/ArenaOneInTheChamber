@@ -1,14 +1,16 @@
 package mc.alk.oitc;
 
-import mc.alk.arena.BattleArena;
-import mc.alk.arena.util.Log;
+import java.util.HashMap;
+import java.util.Set;
+
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.HashMap;
-import java.util.Set;
+import mc.alk.arena.BattleArena;
+import mc.alk.arena.controllers.APIRegistrationController;
+import mc.alk.arena.util.Log;
 public class OneInTheChamber extends JavaPlugin{
 
 	@Override
@@ -18,7 +20,7 @@ public class OneInTheChamber extends JavaPlugin{
 		/// "OneInTheChamber": The name of our competition
 		/// "oic": the name of our command alias
 		/// OITCArena.class: which arena should this competition use
-		BattleArena.registerCompetition(this, "OneInTheChamber", "oic", OITCArena.class);
+		APIRegistrationController.registerCompetition(this, "OneInTheChamber", "oic", BattleArena.createArenaFactory( OITCArena.class) );
 
 		/// Load our config options
 		loadConfig();
